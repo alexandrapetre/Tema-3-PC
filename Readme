@@ -1,0 +1,75 @@
+// PETRE ALEXANDRA 325 CB
+
+
+----------------- TEMA 3 PC -----------------
+
+
+	M-am folosit de scheletul de cod de la laboratorul cu HTTP, in care erau
+implementate functiile de pentru "GET" si "POST".
+
+
+* TASK 1
+	Pentru primul task am facut o cere de GET, pe host-ul si pe portul din cerinta.
+Am modificat putin functia compute_get_request. Am adaugat 4 parametrii noi,
+pe care i-am folosit pentru task-urile urmatoare. (lista de cookies, lungimea
+listei,si token-ul pentru linia cu Authorization). 
+Raspunsul serverului este mereu salvat in variabila response.
+
+
+*TASK 2
+	Am primit mesajul de la server, salvat in response. Textul primit l-am
+impartit in 2 parti:
+	- una in care se gaseste prima parte pana la textul in format json
+	- a doua in care este textul json, de la prima "{".
+
+	Am transformat textul json cu parson intr-un json_value, iar din json_value
+in json_object. Apoi am putut sa extrag fiecare valoare in functie de nume.
+("url", "method" etc).
+	Pentru a putea trimite in formatul cerut username-ul si parola, am facut
+o functie de concatenare care concateneaza doua stringuri date ca char*.
+Dupa ce am format string-ul (string_post), am facut o cere "POST", in care
+am adaugat si lista de cookies pe care le-am primit la task-ul anterior.
+
+
+*TASK 3
+	Pentru cerea de "GET" de la task-ul 3, am adaugat o line in functia
+compute_get_request in care am pus token-ul primit in textul json.
+Am raspuns la cele doua ghicitori si am creat raspunsul,
+stocat in variabila string_post. Apoi am facut cererea de "GET", deschizand
+o conexiune, am construit mesajul cu ajutorul functiei compute_get_request,
+si am trimis mesajul cu ajutorul functiei "sent_to_server", dupa ce am 
+afisat raspunsul de la server, am inchis conexiunea.
+	In plus fata de celelalte cerei de "GET", am adaugat campul
+cu Authorization unde am trimis token-ul primit in campul data din json.
+	Dupa fiecare task rezolvat am dezalocat memoria alocata.
+
+
+*TASK 4
+	Pentru taskul patru am facut o cerere de "GET", catre url-ul primit
+in raspunsul serverului, am adaugat cookie-urile primite si token-ul
+de autorizare.
+
+
+*TASK 5
+	Dupa ce am transformat string-ul primit ca raspuns in format json_object,
+am extras campurile trimise, am transformat adresa url primita in format ip
+si am facut o cerere de "GET" catre acest url in care am adaugat ca parametii
+queryParams primiti tot in raspunsul serverului.
+Cererea am facut-o pe portul 80 (internet) si catre noul host. (ip-ul obtinut)
+Dupa ce s-a realizat cererea de "GET", am primit un alt raspuns cu vremea din
+Bucuresti, si din acest raspuns am extras doar mesajul in format json, pe care 
+l-am trimis catre host-ul 185.118.200.35 de pe portul 8081, printr-o cerere de 
+"POST".
+
+	In final am eliberat memoria alocata.
+
+
+Functia de parsare JSON:
+
+	- am folosit parson si am folosit functiile:
+		* cea care transforma un string in format json_value
+		* functia care transforma un json_value intr-un json_object
+		*functia care ia valoarea in functie de cheie si intoarce un string
+		(json_object_dotget_string). 
+
+	
